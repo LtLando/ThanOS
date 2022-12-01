@@ -1,0 +1,212 @@
+Bug 1:
+    Description of problem: Writing to the wrong port
+    Difficulty to find: Hard
+    Difficulty to fix: Medium
+    Solution: We realized quickly that we were not writing to the correct port so we were not obtaining the correct output. We changed our OUTB and were able to get past        this issue.
+
+Bug 2:
+    Description of problem: Compilation is unable to find file
+    Difficulty to find: Hard
+    Difficulty to fix: Easy
+    Solution: We needed a capital S instead of a lowercase s in our file declaration.
+
+Bug 3:
+    Description of problem: Forgot to update global variable for master and slave picks on calls to irq
+    Difficulty to find: Medium
+    Difficulty to fix: Medium
+    Solution: We updated the global variables so we can have the right values for master and slave picks.
+
+Bug 4:
+    Description of problem: OUTB not working correctly
+    Difficulty to find: Medium
+    Difficulty to fix: Medium
+    Solution: Our data and address parameters were flipped, so OUTB worked after we flipped these.
+
+Bug 5:
+    Description of problem: Did not send an end of interrupt to master port 2, when interrupt came from slave
+    Difficulty to find: Hard
+    Difficulty to fix: Easy
+    Solution: Add an OUTB to write EOI to the master as well as the slave for slave triggered interrupts
+
+Bug 6:
+    Description of problem: Skipping over first data block entirely, no characters on screen
+    Difficulty to find: Hard
+    Difficulty to fix: Easy
+    Solution: Make sure there is no offset when runnind read data so all data block are written
+
+Bug 7:
+    Description of problem: Page fault when trying to read file
+    Difficulty to find: Hard
+    Difficulty to fix: Medium
+    Solution: File was not properly read when checking for index, use strncmp instead of conditional statement
+
+Bug 8:
+    Description of problem: Extra character at the end of very long file name
+    Difficulty to find: Medium
+    Difficulty to fix: Easy
+    Solution: Only compare first 32 bytes so no other bytes are copied into buffer
+
+Bug 9:
+    Description of problem: Skipping over characters in file when writing to screen
+    Difficulty to find: Hard
+    Difficulty to fix: Easy
+    Solution: Make sure pointer to address in data block only points to 8 bits, not 32
+
+Bug 10:
+    Description of problem: File size not calculating correctly
+    Difficulty to find: Hard
+    Difficulty to fix: Hard
+    Solution: Break up equation into steps rather than one line to avoid small errors
+
+Bug 11:
+    Description of problem: Keyboard handler not printing normal lowercase letters
+    Difficulty to find: Easy
+    Difficulty to fix: Easy
+    Solution: conditional logic was placed in the wrong order causing the case needed to
+              print the lowercase letters to never be hit
+
+Bug 12:
+    Description of problem: Scrolling moved every line up except for he last line (bottom)
+    Difficulty to find: Easy
+    Difficulty to fix: Easy
+    Solution: Loop over all video memory positions correlated to the bottom row and clear them (set to 0)
+
+Bug 13:
+    Description of problem: Terminal read infinitely hanging because of not reading the keyboard buffer correctly
+    Difficulty to find: Medium
+    Difficulty to fix: Easy
+    Solution: Technically only 127 charecters can be written to the keyboard buffer because 128 needs to be a 
+              newline, so I changed the threshold for stopping writes to the buffer to 127 instead of 128
+
+Bug 14:
+    Description of problem: RTC read failed to wait, due to improper signaling variable used
+    Difficulty to find: Easy
+    Difficulty to fix: Easy
+    Solution: Forgot to use extern in order to make variable from one file connect to another
+
+Bug 15:
+    Description of problem: RTC read failed to wait, due to improper signaling variable used
+    Difficulty to find: Easy
+    Difficulty to fix: Easy
+    Solution: Forgot to use extern in order to make variable from one file connect to another
+
+Bug 16:
+    Description of problem: Keyboard would not perform the backspace action when the buffer was full
+    Difficulty to find: Easy
+    Difficulty to fix: Easy
+    Solution: Took the backspace key check out of the if check for buffer not being full
+
+Bug 17:
+    Description of problem: Directory read failed
+    Difficulty to find: Medium
+    Difficulty to fix: Easy
+    Solution: We were printing more files than we had, so there were a number of spaces. We end the directory read when the buffer comes to be 0.
+
+Bug 18:
+    Description of problem: General protection fault when trying to run a second program
+    Difficulty to find: Hard
+    Difficulty to fix: Easy
+    Solution: Flush TSS
+
+Bug 19:
+    Description of problem: Page fault when trying to execute programs
+    Difficulty to find: Hard
+    Difficulty to fix: Medium
+    Solution: Argument was pointing to garbage, so fix changing page directory to be dynamic
+
+Bug 20:
+    Description of problem: Page fault when trying to execute programs
+    Difficulty to find: Easy
+    Difficulty to fix: Easy
+    Solution: Flush TLB
+
+Bug 21:
+    Description of problem: Only printing first character of row when calling fish
+    Difficulty to find: Hard
+    Difficulty to fix: Easy
+    Solution: Wasn't accounting for reading segments of a file so returning incorrect values
+
+Bug 22:
+    Description of problem: Incorrect address for screen_start
+    Difficulty to find: Easy
+    Difficulty to fix: Easy
+    Solution: pointed to the physical memory at 0xb8000 instead of the program image base
+
+Bug 23:
+    Description: Page Fault with Grep
+    Difficulty to find: Medium
+    Difficulty to fix: Easy
+    Solution: changed our param validation so we could read file data less than 1024 bytes
+
+Bug 24:
+    Description: Cat and Grep page fault with verylargefilewithverylongname.tx
+    Difficulty to find: Easy
+    Difficulty to fix: Easy
+    Solution: Truncated so that we only care about the first 32 bits of file
+
+Bug 25:
+    Description: any command with verylargefilewithverylongname made it so fish was covered up
+    Difficulty to find: Easy
+    Difficulty to fix: Hard(not capable?)
+    Solution: Something to do with how the fish function works so just do fish first
+
+Bug 26:
+    Description: get_args wasn't working with space before command
+    Difficulty to find: Easy
+    Difficulty to fix: Easy
+    Solution: altered our loop through the buffer to account for space before
+
+BUG 27:
+    Description: screen could not be cleared when keyboard buffer was full
+    Difficulty to find: Easy
+    Difficulty to fix: Easy
+    Solution: Move the clear case in the keyboard handler outside of the buffer full check
+
+BUG 28:
+    Description: charecters were not being written to the correct temrinals video location
+    Difficulty to find: Hard
+    Difficulty to fix: Hard
+    Solution: have putc take a tid so that it can be specified which terminal should be written to
+
+BUG 29:
+    Description: Switching between terminals was not working
+    Difficulty to find: Hard
+    Difficulty to fix: Incredibly easy
+    Solution: missing parenthesis in an equation caused the esp to not be set correctly
+
+BUG 30:
+    Description: clearing the screen wrote a charecter to the screen that was not in the buffer
+    Difficulty to find:
+    Difficulty to fix:
+    Solution: putc based on the charecter count rather than puts
+
+BUG 31:
+    Description: RTC was being slow when multiple program were using it at the same time
+    Difficulty to find: Medium
+    Difficulty to fix: Easy
+    Solution: Virtualize the RTC to work with multiple processes and have multiple different rates
+
+BUG 32:
+    Description: Fish would try to write to the screen thorugh vidmap but the charecter would not appear
+    Difficulty to find:
+    Difficulty to fix:
+    Solution: Fish can only write to memory location that do not hold NULL and thus, video memory must be initialized to
+              be filled with space charecters rather than NULL charecters
+
+BUG 33:
+    Description: Switching shown terminal copied the wrong memory
+    Difficulty to find: put
+    Difficulty to fix:
+    Solution: Instead of copying from kernel video memory, copy from the user level page
+
+BUG 34:
+    Description: Putc always wrote to the shown terminal instead of only writing to the shown if it is actually shown
+    Difficulty to find: Medium
+    Difficulty to fix: Easy
+    Solution: Changed putc to write to video maps per terminal rather than physical video
+
+BUG 35:
+    Description: Process switching not work on multiterm
+    Difficulty to find:
+    Difficulty to fix:
+    Solution: Needed to use curr_tid rather than tid

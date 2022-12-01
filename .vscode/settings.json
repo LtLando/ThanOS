@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "types.h": "c",
+        "filesys.h": "c",
+        "terminal.h": "c",
+        "lib.h": "c",
+        "pcb.h": "c",
+        "syscalls.h": "c",
+        "i8259.h": "c",
+        "ece391syscall.h": "c",
+        "ece391support.h": "c"
+    }
+}

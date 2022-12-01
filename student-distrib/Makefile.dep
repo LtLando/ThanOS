@@ -1,0 +1,31 @@
+assm_link.o: assm_link.S
+boot.o: boot.S multiboot.h x86_desc.h types.h
+sys_call_asm.o: sys_call_asm.S
+x86_desc.o: x86_desc.S x86_desc.h types.h
+exception_handler.o: exception_handler.c exception_handler.h types.h \
+  lib.h i8259.h rtc.h keyboard.h pit.h
+filesys.o: filesys.c filesys.h types.h lib.h terminal.h pcb.h rtc.h
+i8259.o: i8259.c i8259.h types.h lib.h
+idt.o: idt.c x86_desc.h types.h idt.h lib.h
+kernel.o: kernel.c multiboot.h types.h x86_desc.h lib.h i8259.h debug.h \
+  tests.h idt.h exception_handler.h paging.h rtc.h filesys.h keyboard.h \
+  pcb.h syscalls.h term_helper.h pit.h kmalloc.h procs.h
+keyboard.o: keyboard.c keyboard.h types.h lib.h i8259.h term_helper.h
+kmalloc.o: kmalloc.c kmalloc.h types.h lib.h
+kmalloc_tests.o: kmalloc_tests.c kmalloc.h types.h lib.h kmalloc_tests.h
+lib.o: lib.c lib.h types.h term_helper.h pcb.h filesys.h syscalls.h \
+  x86_desc.h paging.h logo.h
+paging.o: paging.c paging.h types.h lib.h x86_desc.h syscalls.h
+pcb.o: pcb.c pcb.h filesys.h types.h terminal.h rtc.h procs.h
+pit.o: pit.c pit.h types.h i8259.h lib.h procs.h pcb.h filesys.h rtc.h
+procs.o: procs.c procs.h types.h pcb.h filesys.h term_helper.h lib.h \
+  syscalls.h x86_desc.h paging.h kmalloc.h
+rtc.o: rtc.c rtc.h types.h exception_handler.h lib.h i8259.h \
+  term_helper.h
+syscalls.o: syscalls.c syscalls.h types.h lib.h terminal.h filesys.h \
+  pcb.h paging.h x86_desc.h rtc.h term_helper.h procs.h
+term_helper.o: term_helper.c term_helper.h types.h lib.h pcb.h filesys.h \
+  syscalls.h x86_desc.h paging.h
+terminal.o: terminal.c terminal.h types.h lib.h
+tests.o: tests.c tests.h x86_desc.h types.h lib.h exception_handler.h \
+  paging.h rtc.h terminal.h filesys.h kmalloc.h kmalloc_tests.h
